@@ -1,0 +1,35 @@
+const express = require('express');
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
+
+// GraphQL-схема определяет структуру данных и операции, которые можно выполнять
+const schema = buildSchema(`
+  type Query {
+    hallo: String
+    berechneSumme(a: Int, b: Int): Int
+  }
+`);
+
+// Корневой объект – точка входа для выполнения операций запроса
+const root = {
+  hallo: () => 'Hallo Welt!', // Простая операция, возвращающая строку
+  berechneSumme: ({ a, b }) => a + b, // Операция, принимающая два аргумента и возвращающая их сумму
+};
+
+const app = express();
+
+// Маршрут GraphQL API, обрабатывающий запросы
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true, // Включение GraphiQL для удобной отладки запросов в браузере
+  })
+);
+
+// Запуск сервера на порту 3000
+const port = 3000;
+app.listen(port, () => {
+  console.log(`GraphQL API запущен на порту ${port}`);
+});
