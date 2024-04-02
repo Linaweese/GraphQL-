@@ -6,16 +6,7 @@ const { buildSchema } = require('graphql');
 const schema = buildSchema(`
   type Query {
     hallo: String
-    berechneSumme(a: Int, b: Int): Int
-  }
-`);
-
-// Корневой объект – точка входа для выполнения операций запроса
-const root = {
-  hallo: () => 'Hallo Welt!', // Простая операция, возвращающая строку
-  berechneSumme: ({ a, b }) => a + b, // Операция, принимающая два аргумента и возвращающая их сумму
-};
-
+    berechneSumme(a: Int,
 const app = express();
 
 // Маршрут GraphQL API, обрабатывающий запросы
