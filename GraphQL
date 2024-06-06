@@ -17,3 +17,22 @@ const port = 3000;
 app.listen(port, () => {
   console.log(`GraphQL API запущен на порту ${port}`);
 });
+const express = require('express');
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
+
+// GraphQL-схема определяет структуру данных и операции, которые можно выполнять
+const schema = buildSchema(`
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true, // Включение GraphiQL для удобной отладки запросов в браузере
+  })
+);
+
+// Запуск сервера на порту 3000
+const port = 3000;
+app.listen(port, () => {
+  console.log(`GraphQL API запущен на порту ${port}`);
+});
